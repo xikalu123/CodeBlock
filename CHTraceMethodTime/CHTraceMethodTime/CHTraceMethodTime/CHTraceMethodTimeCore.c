@@ -38,6 +38,11 @@ typedef struct nlist nlist_t;
 
 #endif
 
+
+#ifndef SEG_DATA_CONST
+#define SEG_DATA_CONST  "__DATA_CONST"
+#endif
+
 /*
  * A structure representing a particular intended rebinding from a symbol
  * name to its replacement
@@ -78,6 +83,59 @@ static int prepend_rebindings(struct rebindings_entry **rebindings_head,
     *rebindings_head = new_enty;
     
     return 0;
+}
+
+//从lazy symbol pointers  和 non-lazy symbol pointers表中遍历所有函数，看是否满足条件，如果有的话就替换
+
+
+static void perform_rebinding_with_section(struct rebindings_entry *rebindings,
+                                           section_t *section,
+                                           intptr_t slide,
+                                           nlist_t *symtab,
+                                           char *strtab,
+                                           uint32_t *indirect_symtab)
+{
+    uint32_t *indirect_symbol_indices = indirect_symtab + section->reserved1; //找出section表在indirect symtab 第一次出现的 地址
+    
+    void **indirect_symbol_bindings = (void **)((uintptr_t)slide + section->addr);// 找出对应的所有已经绑定的函数指针的数组
+    
+    for (uint i = 0; i<section->size/ sizeof(void *); i++) { //遍历表中是所有的函数指针
+        uint32_t symtab_index = indirect_symbol_indices[i]; //取出在 symtab 表中的下标,根据下标可以取出对应的函数的信息
+        if (symtab_index == INDIRECT_SYMBOL_ABS || symtab_index == INDIRECT_SYMBOL_LOCAL ||
+            symtab_index == (INDIRECT_SYMBOL_LOCAL   | INDIRECT_SYMBOL_ABS)) { //剔除
+            continue ;
+        }
+        
+        uint32_t strtab_offset = symtab[symtab_index].n_un.n_strx; //在 strtab 中对应的偏移地址
+        char *symbol_name = strtab + strtab_offset; //函数对应的地址
+        bool symbol_name_longer_than_1 = symbol_name[0] && symbol_name[1] ; //函数的名字 必须有名字，因为第一个是_  例如NSLog -> _NSLog
+        
+        struct rebindings_entry *cur = rebindings; //遍历我们构造的链接，里面存储需要替换的所有函数
+        
+        while (cur) {
+            
+            for (uint j = 0; j<cur->rebindings_nel; j++) {
+                if (symbol_name_longer_than_1 &&
+                    strcmp(&symbol_name[1], cur->rebindings[j].name) == 0) { //找到了需要替换的函数
+                    
+                    if (cur->rebindings[j].replaced != NULL &&
+                        indirect_symbol_bindings[i] != cur->rebindings[j].replacement) {
+                        
+                        *(cur->rebindings[j].replaced) = indirect_symbol_bindings[i]; //先存储之前的系统函数
+                    }
+                    indirect_symbol_bindings[i]  = cur->rebindings[j].replacement;
+                    
+                    goto symbol_loop;
+                    
+                }
+            }
+            
+            
+            cur = cur->next;
+        }
+    symbol_loop:;
+        
+    }
 }
 
 void rebind_symbols_for_image(struct rebindings_entry *rebindings,
@@ -123,6 +181,45 @@ void rebind_symbols_for_image(struct rebindings_entry *rebindings,
         return ;
     }
     
+    //step 1: find linkedit_base , 因为 symbol/string table 偏移地址是相对于 linkedit_base 基址的
+    uintptr_t linkedit_base = (uintptr_t)slide + linkedit_segment->vmaddr - linkedit_segment->fileoff;
+    
+    //step 2: finde symbol/string table address
+    nlist_t *symtab = (nlist_t *)(linkedit_base + symtab_cmd->symoff);
+    char *strtab = (char *)(linkedit_base + symtab_cmd->stroff);
+    
+    //step 3:finde indirect symbol table (array of uint32_t indices into symbol table)
+    uint32_t *indirect_symtab = (uint32_t *)(linkedit_base + dysymtab_cmd->indirectsymoff);
+    
+    
+    
+    //第二次遍历，遍历_DATA段所有的 lazy symbol pointers  和 non-lazy symbol pointers 的，然后通过两个表的下标找到
+    //所有函数对应的 string table的位置，如何相等的话，就替换掉。
+    cur = (uintptr_t)header + sizeof(mach_header_t);
+    
+    for (uint i = 0; i < header->ncmds; i++,cur += cur_seg_cmd->cmdsize) {
+        cur_seg_cmd = (segment_command_t *)cur;
+        if (cur_seg_cmd->cmd == LC_SEGMENT_ARCH_DEPENDENT) { //包括 _PAGEZERO _TEXT _DATA _LINKEDIT
+            if ((strcmp(cur_seg_cmd->segname, SEG_DATA) != 0) //只挑选 _DATA
+                && (strcmp(cur_seg_cmd->segname, SEG_DATA_CONST) != 0))
+            {
+                continue ;
+            }
+            
+            for (uint j = 0; j< cur_seg_cmd->nsects; j++) {
+                section_t *sect = (section_t *)(cur + sizeof(segment_command_t)) + j; // 现在不明白为什么这样表示 ????
+                if ((sect->flags & SECTION_TYPE) == S_LAZY_SYMBOL_POINTERS) {
+                    perform_rebinding_with_section(rebindings, sect, slide, symtab, strtab,indirect_symtab);
+                }
+                
+                if (((sect->flags & SECTION_TYPE) == S_NON_LAZY_SYMBOL_POINTERS)) {
+                    perform_rebinding_with_section(rebindings, sect, slide, symtab, strtab,indirect_symtab);
+                }
+            }
+        }
+    }
+    
+    
 }
 
 void _rebind_symbols_for_image(const struct mach_header * header,
@@ -149,28 +246,28 @@ static int rebind_symbols(struct rebinding rebindings[],size_t rebindings_nel){
     return retval;
 }
 
-static size_t (*origin_strlen)(const char *__s1);
+#pragma  mark ---- 替换 objc_msgsend 的实现
+
+#include <objc/runtime.h>
+#include <dispatch/dispatch.h>
 
 
-size_t chen_strlen(const char *__s1)
-{
-    printf("wo cao le");
-    
-    return origin_strlen(__s1);
-}
+__unused static id (*orig_objc_msgSend)(id, SEL, ...);
 
-void replace()
-{
-    struct rebinding chen_rebinding = {
-        "strlen",
-        chen_strlen,
-        (void *)&origin_strlen
-    };
-    rebind_symbols((struct rebinding[1]){ chen_rebinding }, 1);
-    
-    printf("ss == %d",strlen("chen"));
+static void hook_Objc_msgSend(){ //由于objc_msgSend 方法是汇编写的，所以需要在调用 objc_msgSend 前后记录时间，然后相减，即可得到每个方法的耗时。
     
 }
+
+
+void chCallTraceStart()
+{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        rebind_symbols((struct rebinding[1]){"objc_msgSend",
+            hook_Objc_msgSend, (void *)&orig_objc_msgSend}, 1);
+    });
+}
+
 
 //#else
 //如果不支持arm64位，说明是模拟器，执行空函数
