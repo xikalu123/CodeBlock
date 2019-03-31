@@ -254,6 +254,18 @@ static int rebind_symbols(struct rebinding rebindings[],size_t rebindings_nel){
 
 __unused static id (*orig_objc_msgSend)(id, SEL, ...);
 
+/*
+ 需要明白的汇编知识:
+ 1.
+ __asm volatile C语言内嵌汇编语言  volatile表示编译器不要优化代码
+ ARM64拥有31个64位通用q寄存器X0-X30.
+ stp
+ mov
+ ldp
+ aub
+ add
+ 
+ */
 static void hook_Objc_msgSend(){ //由于objc_msgSend 方法是汇编写的，所以需要在调用 objc_msgSend 前后记录时间，然后相减，即可得到每个方法的耗时。
     
 }
