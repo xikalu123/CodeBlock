@@ -250,9 +250,47 @@ static int rebind_symbols(struct rebinding rebindings[],size_t rebindings_nel){
 
 #include <objc/runtime.h>
 #include <dispatch/dispatch.h>
+#include <pthread.h>
 
-
+static bool _call_record_enabled = true;
+static pthread_key_t _thread_key; //线程私有数据的key值
 __unused static id (*orig_objc_msgSend)(id, SEL, ...);
+
+static smCallRecord *_smCallRecords; //数组地址，保存需要打印的数据结构。
+
+typedef struct {
+    id self; //通过 object_getClass 能够得到 Class 再通过 NSStringFromClass 能够得到类名
+    Class cls;
+    SEL cmd;// 选择子，通过NSStringFromSelector获得方法名
+    uint64_t time;// us
+    uintptr_t lr; //link register
+} thread_call_record;
+
+typedef struct{
+    thread_call_record *stack;
+    int allocated_length;
+    int index;
+    bool is_main_thread;
+    
+} thread_call_stack;
+
+
+//线程退出时释放函数
+static void release_thread_call_stack(void *ptr){
+    thread_call_stack *cs = (thread_call_stack *)ptr;
+    if (!cs) return;
+    if (cs->stack) free(cs->stack);
+    free(cs);
+}
+
+static inline thread_call_stack * get_thread_call_stack()
+{
+    thread_call_stack *cs = (thread_call_stack *)pthread_getspecific(_thread_key);
+    
+    
+    return cs;
+}
+
 
 /*
  需要明白的汇编知识:
@@ -260,6 +298,7 @@ __unused static id (*orig_objc_msgSend)(id, SEL, ...);
  1.
  __asm volatile C语言内嵌汇编语言  volatile表示编译器不要优化代码
  通用寄存器：ARM64拥有31个64位通用q寄存器X0-X30(64位) r0-r30 是32位
+ LR:Link register 保存着最后一次函数调用指令之后下一条指令的内存地址，函数调用栈的跟踪
  SP寄存器：stack pointer 存放栈的偏移地址 实际是X31
  PC寄存器：当前执行的指令的地址，不能改写
  VO-V31：向量寄存器，浮点型寄存器
@@ -290,15 +329,25 @@ static void hook_Objc_msgSend(){ //由于objc_msgSend 方法是汇编写的，�
     
 }
 
+/*
+ 1. pthread_key_create 创建一个key。
+ 2. pthread_setspecific 通过一个key 在线程设置私有数据
+ 3. pthread_getspecific 通过一个key 从线程读取私有数据。
+ 所有线程可以访问key，但是会自己保存不同的值，相当于一个同名而不同值的全局变量。
+ */
+
 
 void chCallTraceStart()
 {
     static dispatch_once_t onceToken;
+    _call_record_enabled = true;
     dispatch_once(&onceToken, ^{
+        pthread_key_create(&_thread_key, &release_thread_call_stack);
         rebind_symbols((struct rebinding[1]){"objc_msgSend",
             hook_Objc_msgSend, (void *)&orig_objc_msgSend}, 1);
     });
 }
+
 
 
 //#else
