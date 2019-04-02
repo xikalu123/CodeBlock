@@ -256,16 +256,36 @@ __unused static id (*orig_objc_msgSend)(id, SEL, ...);
 
 /*
  需要明白的汇编知识:
+ https://blog.cnbluebox.com/blog/2017/07/24/arm64-start/
  1.
  __asm volatile C语言内嵌汇编语言  volatile表示编译器不要优化代码
- ARM64拥有31个64位通用q寄存器X0-X30.
- stp
- mov
- ldp
- aub
- add
+ 通用寄存器：ARM64拥有31个64位通用q寄存器X0-X30(64位) r0-r30 是32位
+ SP寄存器：stack pointer 存放栈的偏移地址 实际是X31
+ PC寄存器：当前执行的指令的地址，不能改写
+ VO-V31：向量寄存器，浮点型寄存器
+ stp 入栈指令，将两个寄存器内容写入栈  例子 "stp x8, x9, [sp, #-16]!\n"
+ mov src desc  将desc的值传给 src。 例子 "mov x2, lr\n" 将lr的值传给x2
+ ldp 出栈指令，从地址读取两个寄存器内容，分别写入。 例子 "ldp x0, x1, [sp], #16\n"
+ sub 相减运算 "sub sp, sp, #16\n" 将sp - 16 写入sp
+ add 相加运算 "add sp, sp, #16\n" 将sp + 16 写入sp
  
  */
+
+//保存objc_msgSend函数的入参，x0是传入的对象，x1是选择子_cmd。 syscall 的number会放到 x8里。
+
+/*
+ 依次将x9-x0寄存器的内容写入栈上，栈顶指针依次移动.(栈是从高地址向低地址移动的，所以一直 - 16字节)
+ */
+#define save() \
+__asm volatile (\
+ "stp x8, x9, [sp, #-16]!\n"\
+ "stp x6, x7, [sp, #-16]!\n"\
+ "stp x4, x5, [sp, #-16]!\n"\
+ "stp x2, x3, [sp, #-16]!\n"\
+ "stp x0, x1, [sp, #-16]!\n");
+
+
+
 static void hook_Objc_msgSend(){ //由于objc_msgSend 方法是汇编写的，所以需要在调用 objc_msgSend 前后记录时间，然后相减，即可得到每个方法的耗时。
     
 }
