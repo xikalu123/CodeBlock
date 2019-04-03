@@ -251,12 +251,22 @@ static int rebind_symbols(struct rebinding rebindings[],size_t rebindings_nel){
 #include <objc/runtime.h>
 #include <dispatch/dispatch.h>
 #include <pthread.h>
+#include <sys/time.h>
 
 static bool _call_record_enabled = true;
 static pthread_key_t _thread_key; //线程私有数据的key值
 __unused static id (*orig_objc_msgSend)(id, SEL, ...);
 
+static uint64_t _min_time_cost = 1000; //us
+static int _max_call_depth = 3;
+
 static smCallRecord *_smCallRecords; //数组地址，保存需要打印的数据结构。
+//static int otp_record_num;
+//static int otp_record_alloc;
+static int _smRecordNum;
+static int _smRecordAlloc;
+
+//缓存的thread_call_stack  如何转化为  显示的 _smCallRecords 。
 
 typedef struct {
     id self; //通过 object_getClass 能够得到 Class 再通过 NSStringFromClass 能够得到类名
@@ -283,13 +293,94 @@ static void release_thread_call_stack(void *ptr){
     free(cs);
 }
 
+//线程获取私有数据的方法，如果为空，则初始化进行设置。
 static inline thread_call_stack * get_thread_call_stack()
 {
     thread_call_stack *cs = (thread_call_stack *)pthread_getspecific(_thread_key);
-    
-    
+    if (cs == NULL) {
+        cs = (thread_call_stack *)malloc(sizeof(thread_call_stack)); //分配内存中可以是任意值
+        cs->stack = (thread_call_record *)calloc(128, sizeof(thread_call_record)); //分配的128 个内存块设置为 0
+        cs->allocated_length = 64;
+        cs->index = -1;
+        cs->is_main_thread = pthread_main_np(); //是否是主线程
+        pthread_setspecific(_thread_key, cs);//线程设置私有值
+    }
     return cs;
 }
+
+//开始记录,构造一个新的record用来记录数据
+static inline void push_call_record(id _self, Class _cls, SEL _cmd, uintptr_t lr)
+{
+    thread_call_stack *cs  = get_thread_call_stack();//获取线程私有数据数组的地址
+    if (cs) {
+        int nextIndex = (++cs->index); //下一个存储的地方
+        if (nextIndex >= cs->allocated_length) { //存储的内存已经，在扩充64个
+            cs->allocated_length += 64;
+            cs->stack = (thread_call_record *)realloc(cs->stack, cs->allocated_length * sizeof(thread_call_record));
+        }
+        thread_call_record *newRecord = &cs->stack[nextIndex];
+        newRecord->self = _self;
+        newRecord->cls = _cls;
+        newRecord->cmd = _cmd;
+        newRecord->lr = lr;
+        if (cs->is_main_thread && _call_record_enabled) {
+            struct timeval now;
+            gettimeofday(&now, NULL); //获取当前时间
+            newRecord->time = (now.tv_sec % 100) * 1000000 + now.tv_usec; //秒 + us
+        }
+    }
+}
+
+//结束记录，缓存数据  thread_call_stack  数据转化为  _smCallRecords
+static inline uintptr_t pop_call_record()
+{
+    thread_call_stack *cs = get_thread_call_stack();
+    int curIndex = cs->index;
+    int nextIndex = cs->index--;
+    thread_call_record *pRecord = &cs->stack[nextIndex]; //取出改方法 push时 的记录
+    
+    if (cs->is_main_thread && _call_record_enabled) {
+        struct timeval now;
+        gettimeofday(&now, NULL);
+        uint64_t time = (now.tv_sec % 100) * 1000000 + now.tv_usec;
+        if (time < pRecord->time) {
+            time += 100 * 1000000;
+        }
+        uint64_t cost = time - pRecord->time; //取出时间相减，得到方法的时长。
+        if (cost > _min_time_cost && cs->index < _max_call_depth) {
+            if (!_smCallRecords) {
+                _smRecordAlloc = 1024;
+                _smCallRecords = malloc(sizeof(smCallRecord) * _smRecordAlloc);
+            }
+            _smRecordNum ++;
+            
+            if (_smRecordNum >= _smRecordAlloc) {
+                _smRecordAlloc += 1024;
+                _smCallRecords = realloc(_smCallRecords, sizeof(smCallRecord) * _smRecordAlloc);
+            }
+            
+            smCallRecord *log = &_smCallRecords[_smRecordNum - 1];
+            log->cls = pRecord->cls;
+            log->depth = curIndex;
+            log->sel = pRecord->cmd;
+            log->time = cost;
+        }
+        
+    }
+    
+    return pRecord->lr;
+}
+
+//作用等同于push pop，在汇编中需要执行的函数。
+void before_objc_msgSend(id self, SEL _cmd, uintptr_t lr) {
+    push_call_record(self, object_getClass(self), _cmd, lr);
+}
+
+uintptr_t after_objc_msgSend() {
+    return pop_call_record();
+}
+
+
 
 
 /*
