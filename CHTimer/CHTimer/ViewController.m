@@ -8,60 +8,98 @@
 
 #import "ViewController.h"
 
-@interface ViewController () <UICollectionViewDelegate,UICollectionViewDataSource>
+#import "NSTimerViewController.h"
 
-@property (nonatomic, strong) UICollectionView *collecView;
+@interface ViewController () <UITableViewDelegate,UITableViewDataSource>
+
+@property (nonatomic, strong) UITableView *tableView;
+
 
 @end
+
+static NSArray *tableData;
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self collecView];
+    tableData = @[@"NSTimer",@"CADisplayLink",@"GCDTimer"];
+    [self.tableView reloadData];
 //    [self.collecView reloadData];
     // Do any additional setup after loading the view, typically from a nib.
 }
 
-
-- (UICollectionView *)collecView
+- (UITableView *)tableView
 {
-    if (!_collecView) {
-        UICollectionViewFlowLayout *fl = [[UICollectionViewFlowLayout alloc] init];
-        fl.minimumInteritemSpacing = 5;
-        fl.minimumLineSpacing = 5;
-        _collecView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:fl];
-        _collecView.delegate = self;
-        _collecView.dataSource = self;
-        _collecView.backgroundColor = [UIColor whiteColor];
-        [_collecView registerClass:UICollectionViewCell.class forCellWithReuseIdentifier:@"collec_timer"];
-        [self.view addSubview:_collecView];
-    
+    if (!_tableView) {
+        _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+        _tableView.delegate = self;
+        _tableView.dataSource = self;
+        _tableView.backgroundColor = [UIColor whiteColor];
+        _tableView.rowHeight = 80;
+        [self.view addSubview:_tableView];
     }
-    return _collecView;
+    return _tableView;
 }
 
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
 }
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return 3;
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewCell *timerCell = [collectionView dequeueReusableCellWithReuseIdentifier:@"collec_timer" forIndexPath:indexPath];
-    timerCell.backgroundColor = [UIColor grayColor];
-    return timerCell;
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"chen"];
+    
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"chen"];
+        cell.textLabel.text = [tableData objectAtIndex:indexPath.row];
+    }
+    return cell;
 }
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(nonnull NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(100, 100);
+    switch (indexPath.row) {
+        case 0:
+            [self testNSTimer];
+            break;
+        case 1:
+            [self testCADisplayLink];
+            break;
+        case 2:
+            [self testGCDTimer];
+            break;
+            
+            
+        default:
+            break;
+    }
 }
 
+#pragma mark -- Timer
+
+
+- (void)testNSTimer
+{
+    NSTimerViewController *timerVC = [[NSTimerViewController alloc] init];
+    [self presentViewController:timerVC animated:YES completion:nil];
+}
+
+- (void)testCADisplayLink
+{
+    
+}
+
+- (void)testGCDTimer
+{
+    
+}
 
 @end

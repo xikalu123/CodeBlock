@@ -15,6 +15,7 @@
 		0AD60265225A1EF600F53758 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AD60264225A1EF600F53758 /* main.m */; };
 		0AD6026F225A1EF700F53758 /* CHTimerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AD6026E225A1EF700F53758 /* CHTimerTests.m */; };
 		0AD6027A225A1EF700F53758 /* CHTimerUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AD60279225A1EF700F53758 /* CHTimerUITests.m */; };
+		0AD60289225BA25C00F53758 /* NSTimerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AD60288225BA25C00F53758 /* NSTimerViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,8 @@
 		0AD60275225A1EF700F53758 /* CHTimerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CHTimerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AD60279225A1EF700F53758 /* CHTimerUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CHTimerUITests.m; sourceTree = "<group>"; };
 		0AD6027B225A1EF700F53758 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0AD60287225BA25C00F53758 /* NSTimerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSTimerViewController.h; sourceTree = "<group>"; };
+		0AD60288225BA25C00F53758 /* NSTimerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSTimerViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +113,8 @@
 				0AD60260225A1EF600F53758 /* LaunchScreen.storyboard */,
 				0AD60263225A1EF600F53758 /* Info.plist */,
 				0AD60264225A1EF600F53758 /* main.m */,
+				0AD60287225BA25C00F53758 /* NSTimerViewController.h */,
+				0AD60288225BA25C00F53758 /* NSTimerViewController.m */,
 			);
 			path = CHTimer;
 			sourceTree = "<group>";
@@ -265,6 +270,7 @@
 				0AD6025A225A1EF500F53758 /* ViewController.m in Sources */,
 				0AD60265225A1EF600F53758 /* main.m in Sources */,
 				0AD60257225A1EF500F53758 /* AppDelegate.m in Sources */,
+				0AD60289225BA25C00F53758 /* NSTimerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
