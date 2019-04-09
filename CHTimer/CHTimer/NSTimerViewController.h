@@ -14,4 +14,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+//破除循环引用
+@interface CHTimer : NSObject
+
++ (NSTimer *)scheduledTimerWithTimeInterval:(NSTimeInterval)ti target:(id)aTarget selector:(SEL)aSelector userInfo:(id)userInfo repeats:(BOOL)yesOrNo;
+
++ (NSTimer *)scheduledTimerWithTimeInterval:(NSTimeInterval)ti repeats:(BOOL)yesOrNo tickBlock:(void (^)(void))block;
+
+@end
+
 NS_ASSUME_NONNULL_END
