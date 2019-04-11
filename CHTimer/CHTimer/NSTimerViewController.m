@@ -11,6 +11,8 @@
 
 @interface NSTimerViewController ()
 
+@property (nonatomic, strong) CHPerfectTimer *perfectTimer;
+
 @property (nonatomic, strong) NSTimer *timer;
 
 @property (nonatomic, strong) UIButton *exit;
@@ -61,7 +63,17 @@
 
 - (void)resetTimer
 {
-    _timer = [CHTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(addCount) userInfo:nil repeats:YES];
+//    _timer = [CHTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(addCount) userInfo:nil repeats:YES];
+    
+    
+//    __weak typeof(self) weakself = self;
+//    _timer = [NSTimer ch_scheduledTimerWithTimeInterval:1 repeats:YES block:^(NSTimer * _Nonnull timer) {
+//        __weak typeof(self) strongself = weakself;
+//        [strongself addCount];
+//    }];
+    
+    _perfectTimer = [CHPerfectTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(addCount) userInfo:nil repeats:YES];
+    [_perfectTimer start];
     
 }
 
@@ -69,6 +81,7 @@
 {
     [_timer invalidate];
     _timer = nil;
+    [_perfectTimer stop];
 }
 
 
@@ -80,13 +93,13 @@
 
 - (void)dealloc
 {
-    
+    [self stopTimer];
 }
 
 @end
 
 
-/*1.破除循环引用的方法
+/*方法 一
  
  VC --强引用---》自定义Timer---强引用---》NSTimer
  |              |                   |
@@ -133,7 +146,6 @@
     CHTimer *timer = [[CHTimer alloc] init];
     timer.repeat = yesOrNo;
     timer.tickBlock = block;
-    
     timer.nsTimer = [NSTimer scheduledTimerWithTimeInterval:ti target:timer selector:@selector(timerFired) userInfo:nil repeats:yesOrNo];
     
     return timer.nsTimer;
@@ -163,3 +175,164 @@
 }
 
 @end
+
+
+/*方法 二
+
+ 分类实现
+ */
+
+@implementation NSTimer (unRetainWithBlock)
+
++ (NSTimer *)ch_scheduledTimerWithTimeInterval:(NSTimeInterval)ti repeats:(BOOL)repeats block:(void (^)(NSTimer * _Nonnull))block
+{
+    return [NSTimer scheduledTimerWithTimeInterval:ti target:self selector:@selector(blockInvoke:) userInfo:[block copy] repeats:repeats];
+}
+
++ (void)blockInvoke:(NSTimer *)timer
+{
+    void (^block)(NSTimer *timer) = timer.userInfo;
+    if (block) {
+        block(timer);
+    }
+}
+
+@end
+
+
+/*方法 三
+ 
+ 既使用 间接target 又使用 NSPoxy
+ 
+ */
+
+@interface ONEProxy : NSObject
+
+@property (weak, nonatomic) id realTarget;
+
+@end
+
+
+@implementation ONEProxy
+
+- (id)forwardingTargetForSelector:(SEL)aSelector
+{
+    if ([self.realTarget respondsToSelector:aSelector]) {
+        return self.realTarget;
+    }
+    return nil;
+}
+
+- (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector
+{
+    NSMethodSignature* signature = [super methodSignatureForSelector:aSelector];
+    if (!signature) {
+        signature = [self.realTarget methodSignatureForSelector:aSelector];
+    }
+    
+    return signature;
+}
+
+- (void)forwardInvocation:(NSInvocation *)anInvocation
+{
+    SEL invSEL = anInvocation.selector;
+    if ([self.realTarget respondsToSelector:invSEL]) {
+        [anInvocation invokeWithTarget:self.realTarget];
+    }
+    else{
+        [self doesNotRecognizeSelector:invSEL];
+    }
+}
+
+@end
+
+
+@interface CHPerfectTimer()
+
+@property (nonatomic, strong) ONEProxy *proxy;
+@property (nonatomic, strong, readwrite) NSTimer *timer;
+
+@property (nonatomic, weak) id cTarget;
+@property (nonatomic, assign) SEL cSelector;
+@property (nonatomic, strong) id userInfo;
+@property (nonatomic, assign) NSTimeInterval ti;
+@property (nonatomic, assign) BOOL repeats;
+@property (nonatomic, copy) dispatch_block_t tickBlock;
+
+
+@end
+
+@implementation CHPerfectTimer
+
++ (instancetype )scheduledTimerWithTimeInterval:(NSTimeInterval)ti target:(id)aTarget selector:(SEL)aSelector userInfo:(id)userInfo repeats:(BOOL)yesOrNo
+{
+    CHPerfectTimer *realTarget = [[CHPerfectTimer alloc] init];
+    realTarget.cTarget = aTarget;
+    realTarget.cSelector = aSelector;
+    realTarget.userInfo = userInfo;
+    realTarget.repeats = yesOrNo;
+    realTarget.ti = ti;
+    
+    ONEProxy *proxy = [[ONEProxy alloc] init];
+    proxy.realTarget = realTarget;
+    realTarget.proxy = proxy;
+    
+    return realTarget;
+    
+}
+
++ (instancetype )scheduledTimerWithTimeInterval:(NSTimeInterval)ti repeats:(BOOL)repeats block:(dispatch_block_t )block
+{
+    CHPerfectTimer *realTarget = [[CHPerfectTimer alloc] init];
+    realTarget.tickBlock = block;
+    realTarget.repeats = repeats;
+    realTarget.ti = ti;
+    
+    ONEProxy *proxy = [[ONEProxy alloc] init];
+    proxy.realTarget = realTarget;
+    realTarget.proxy = proxy;
+    
+    return realTarget;
+}
+
+- (void)timerFired:(NSTimer *)theTimer
+{
+    if (self.cTarget && [self.cTarget respondsToSelector:self.cSelector]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+        [self.cTarget performSelector:self.cSelector];
+#pragma clang diagnostic pop
+    }
+    
+    if (self.tickBlock) {
+        self.tickBlock();
+    }
+}
+
+- (void)start
+{
+    [self stop];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:self.ti target:self.proxy selector:@selector(timerFired:) userInfo:self.userInfo repeats:self.repeats];
+}
+    
+
+
+- (void)stop
+{
+    [self.timer invalidate];
+    self.timer = nil;
+}
+
+- (BOOL)isValid {
+    return self.timer.isValid;
+}
+
+- (void)dealloc
+{
+    [self stop];
+}
+
+
+
+@end
+
