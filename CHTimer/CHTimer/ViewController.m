@@ -9,6 +9,7 @@
 #import "ViewController.h"
 
 #import "NSTimerViewController.h"
+#import "CADisplayLinkViewController.h"
 
 @interface ViewController () <UITableViewDelegate,UITableViewDataSource>
 
@@ -94,7 +95,8 @@ static NSArray *tableData;
 
 - (void)testCADisplayLink
 {
-    
+    CADisplayLinkViewController *cadisVC = [[CADisplayLinkViewController alloc] init];
+    [self presentViewController:cadisVC animated:YES completion:nil];
 }
 
 - (void)testGCDTimer

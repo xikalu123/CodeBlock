@@ -17,6 +17,7 @@
 		0AD6027A225A1EF700F53758 /* CHTimerUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AD60279225A1EF700F53758 /* CHTimerUITests.m */; };
 		0AD60289225BA25C00F53758 /* NSTimerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AD60288225BA25C00F53758 /* NSTimerViewController.m */; };
 		0AF37EEB225C4FDD00D6AF52 /* CHTimerDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AF37EEA225C4FDD00D6AF52 /* CHTimerDisplay.m */; };
+		0AF37F3522605F1900D6AF52 /* CADisplayLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AF37F3422605F1900D6AF52 /* CADisplayLinkViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,8 @@
 		0AD60288225BA25C00F53758 /* NSTimerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSTimerViewController.m; sourceTree = "<group>"; };
 		0AF37EE9225C4FDD00D6AF52 /* CHTimerDisplay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CHTimerDisplay.h; sourceTree = "<group>"; };
 		0AF37EEA225C4FDD00D6AF52 /* CHTimerDisplay.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CHTimerDisplay.m; sourceTree = "<group>"; };
+		0AF37F3322605F1900D6AF52 /* CADisplayLinkViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CADisplayLinkViewController.h; sourceTree = "<group>"; };
+		0AF37F3422605F1900D6AF52 /* CADisplayLinkViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CADisplayLinkViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +123,8 @@
 				0AD60264225A1EF600F53758 /* main.m */,
 				0AD60287225BA25C00F53758 /* NSTimerViewController.h */,
 				0AD60288225BA25C00F53758 /* NSTimerViewController.m */,
+				0AF37F3322605F1900D6AF52 /* CADisplayLinkViewController.h */,
+				0AF37F3422605F1900D6AF52 /* CADisplayLinkViewController.m */,
 			);
 			path = CHTimer;
 			sourceTree = "<group>";
@@ -273,6 +278,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0AD6025A225A1EF500F53758 /* ViewController.m in Sources */,
+				0AF37F3522605F1900D6AF52 /* CADisplayLinkViewController.m in Sources */,
 				0AD60265225A1EF600F53758 /* main.m in Sources */,
 				0AF37EEB225C4FDD00D6AF52 /* CHTimerDisplay.m in Sources */,
 				0AD60257225A1EF500F53758 /* AppDelegate.m in Sources */,
