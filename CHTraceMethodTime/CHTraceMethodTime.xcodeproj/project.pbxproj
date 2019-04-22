@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A00FFE02267273200F9240D /* CHMachOToolBox.c in Sources */ = {isa = PBXBuildFile; fileRef = 0A00FFDF2267273200F9240D /* CHMachOToolBox.c */; };
 		0A78AA95224E25C6002FE015 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A78AA94224E25C6002FE015 /* AppDelegate.m */; };
 		0A78AA98224E25C6002FE015 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A78AA97224E25C6002FE015 /* ViewController.m */; };
 		0A78AA9B224E25C6002FE015 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A78AA99224E25C6002FE015 /* Main.storyboard */; };
@@ -36,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0A00FFDE2267273200F9240D /* CHMachOToolBox.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CHMachOToolBox.h; sourceTree = "<group>"; };
+		0A00FFDF2267273200F9240D /* CHMachOToolBox.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = CHMachOToolBox.c; sourceTree = "<group>"; };
 		0A78AA90224E25C6002FE015 /* CHTraceMethodTime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CHTraceMethodTime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A78AA93224E25C6002FE015 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		0A78AA94224E25C6002FE015 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -141,6 +144,8 @@
 			children = (
 				0A78AAC9224E26E4002FE015 /* CHTraceMethodTimeCore.h */,
 				0A78AACA224E26E4002FE015 /* CHTraceMethodTimeCore.c */,
+				0A00FFDE2267273200F9240D /* CHMachOToolBox.h */,
+				0A00FFDF2267273200F9240D /* CHMachOToolBox.c */,
 			);
 			path = CHTraceMethodTime;
 			sourceTree = "<group>";
@@ -279,6 +284,7 @@
 				0A78AAA3224E25C8002FE015 /* main.m in Sources */,
 				0A78AA95224E25C6002FE015 /* AppDelegate.m in Sources */,
 				0A78AACB224E26E4002FE015 /* CHTraceMethodTimeCore.c in Sources */,
+				0A00FFE02267273200F9240D /* CHMachOToolBox.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

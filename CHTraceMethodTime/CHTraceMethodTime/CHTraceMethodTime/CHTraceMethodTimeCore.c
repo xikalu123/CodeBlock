@@ -182,6 +182,7 @@ void rebind_symbols_for_image(struct rebindings_entry *rebindings,
     }
     
     //step 1: find linkedit_base , 因为 symbol/string table 偏移地址是相对于 linkedit_base 基址的
+    // 段的虚拟地址偏移量 = 虚拟地址 (vmaddr) - 文件偏移量 (fileOffset)
     uintptr_t linkedit_base = (uintptr_t)slide + linkedit_segment->vmaddr - linkedit_segment->fileoff;
     
     //step 2: finde symbol/string table address
