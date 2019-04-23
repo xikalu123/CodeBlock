@@ -16,6 +16,7 @@
 		0AD6026F225A1EF700F53758 /* CHTimerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AD6026E225A1EF700F53758 /* CHTimerTests.m */; };
 		0AD6027A225A1EF700F53758 /* CHTimerUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AD60279225A1EF700F53758 /* CHTimerUITests.m */; };
 		0AD60289225BA25C00F53758 /* NSTimerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AD60288225BA25C00F53758 /* NSTimerViewController.m */; };
+		0AD6028C226342BF00F53758 /* CHGCDTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AD6028B226342BF00F53758 /* CHGCDTimer.m */; };
 		0AF37EEB225C4FDD00D6AF52 /* CHTimerDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AF37EEA225C4FDD00D6AF52 /* CHTimerDisplay.m */; };
 		0AF37F3522605F1900D6AF52 /* CADisplayLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AF37F3422605F1900D6AF52 /* CADisplayLinkViewController.m */; };
 /* End PBXBuildFile section */
@@ -56,6 +57,8 @@
 		0AD6027B225A1EF700F53758 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0AD60287225BA25C00F53758 /* NSTimerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSTimerViewController.h; sourceTree = "<group>"; };
 		0AD60288225BA25C00F53758 /* NSTimerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSTimerViewController.m; sourceTree = "<group>"; };
+		0AD6028A226342BF00F53758 /* CHGCDTimer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CHGCDTimer.h; sourceTree = "<group>"; };
+		0AD6028B226342BF00F53758 /* CHGCDTimer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CHGCDTimer.m; sourceTree = "<group>"; };
 		0AF37EE9225C4FDD00D6AF52 /* CHTimerDisplay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CHTimerDisplay.h; sourceTree = "<group>"; };
 		0AF37EEA225C4FDD00D6AF52 /* CHTimerDisplay.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CHTimerDisplay.m; sourceTree = "<group>"; };
 		0AF37F3322605F1900D6AF52 /* CADisplayLinkViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CADisplayLinkViewController.h; sourceTree = "<group>"; };
@@ -114,17 +117,19 @@
 				0AD60256225A1EF500F53758 /* AppDelegate.m */,
 				0AD60258225A1EF500F53758 /* ViewController.h */,
 				0AD60259225A1EF500F53758 /* ViewController.m */,
-				0AF37EE9225C4FDD00D6AF52 /* CHTimerDisplay.h */,
-				0AF37EEA225C4FDD00D6AF52 /* CHTimerDisplay.m */,
 				0AD6025B225A1EF500F53758 /* Main.storyboard */,
 				0AD6025E225A1EF600F53758 /* Assets.xcassets */,
 				0AD60260225A1EF600F53758 /* LaunchScreen.storyboard */,
 				0AD60263225A1EF600F53758 /* Info.plist */,
 				0AD60264225A1EF600F53758 /* main.m */,
+				0AF37EE9225C4FDD00D6AF52 /* CHTimerDisplay.h */,
+				0AF37EEA225C4FDD00D6AF52 /* CHTimerDisplay.m */,
 				0AD60287225BA25C00F53758 /* NSTimerViewController.h */,
 				0AD60288225BA25C00F53758 /* NSTimerViewController.m */,
 				0AF37F3322605F1900D6AF52 /* CADisplayLinkViewController.h */,
 				0AF37F3422605F1900D6AF52 /* CADisplayLinkViewController.m */,
+				0AD6028A226342BF00F53758 /* CHGCDTimer.h */,
+				0AD6028B226342BF00F53758 /* CHGCDTimer.m */,
 			);
 			path = CHTimer;
 			sourceTree = "<group>";
@@ -283,6 +288,7 @@
 				0AF37EEB225C4FDD00D6AF52 /* CHTimerDisplay.m in Sources */,
 				0AD60257225A1EF500F53758 /* AppDelegate.m in Sources */,
 				0AD60289225BA25C00F53758 /* NSTimerViewController.m in Sources */,
+				0AD6028C226342BF00F53758 /* CHGCDTimer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

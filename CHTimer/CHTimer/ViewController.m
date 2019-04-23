@@ -10,6 +10,7 @@
 
 #import "NSTimerViewController.h"
 #import "CADisplayLinkViewController.h"
+#import "CHGCDTimer.h"
 
 @interface ViewController () <UITableViewDelegate,UITableViewDataSource>
 
@@ -101,7 +102,8 @@ static NSArray *tableData;
 
 - (void)testGCDTimer
 {
-    
+    CHGCDTimer *gcdTimerVC = [[CHGCDTimer alloc] init];
+    [self presentViewController:gcdTimerVC animated:YES completion:nil];
 }
 
 @end
