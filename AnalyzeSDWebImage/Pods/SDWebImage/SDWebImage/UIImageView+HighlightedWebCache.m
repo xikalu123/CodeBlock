@@ -36,7 +36,7 @@
         __weak __typeof(self)wself = self;
         id<SDWebImageOperation> operation = [SDWebImageManager.sharedManager downloadImageWithURL:url options:options progress:progressBlock completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
             if (!wself) return;
-            dispatch_main_sync_safe (^
+            ch_dispatch_main_sync_safe (^
                                      {
                                          if (!wself) return;
                                          if (image && (options & SDWebImageAvoidAutoSetImage) && completedBlock)
@@ -55,7 +55,7 @@
         }];
         [self sd_setImageLoadOperation:operation forKey:UIImageViewHighlightedWebCacheOperationKey];
     } else {
-        dispatch_main_async_safe(^{
+        ch_dispatch_main_async_safe(^{
             NSError *error = [NSError errorWithDomain:SDWebImageErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey : @"Trying to load a nil url"}];
             if (completedBlock) {
                 completedBlock(nil, error, SDImageCacheTypeNone, url);

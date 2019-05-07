@@ -56,7 +56,7 @@ static char imageURLStorageKey;
     if (!url) {
         [self.imageURLStorage removeObjectForKey:@(state)];
         
-        dispatch_main_async_safe(^{
+        ch_dispatch_main_async_safe(^{
             if (completedBlock) {
                 NSError *error = [NSError errorWithDomain:SDWebImageErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey : @"Trying to load a nil url"}];
                 completedBlock(nil, error, SDImageCacheTypeNone, url);
@@ -71,7 +71,7 @@ static char imageURLStorageKey;
     __weak __typeof(self)wself = self;
     id <SDWebImageOperation> operation = [SDWebImageManager.sharedManager downloadImageWithURL:url options:options progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
         if (!wself) return;
-        dispatch_main_sync_safe(^{
+        ch_dispatch_main_sync_safe(^{
             __strong UIButton *sself = wself;
             if (!sself) return;
             if (image && (options & SDWebImageAvoidAutoSetImage) && completedBlock)
@@ -119,7 +119,7 @@ static char imageURLStorageKey;
         __weak __typeof(self)wself = self;
         id <SDWebImageOperation> operation = [SDWebImageManager.sharedManager downloadImageWithURL:url options:options progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
             if (!wself) return;
-            dispatch_main_sync_safe(^{
+            ch_dispatch_main_sync_safe(^{
                 __strong UIButton *sself = wself;
                 if (!sself) return;
                 if (image && (options & SDWebImageAvoidAutoSetImage) && completedBlock)
@@ -137,7 +137,7 @@ static char imageURLStorageKey;
         }];
         [self sd_setBackgroundImageLoadOperation:operation forState:state];
     } else {
-        dispatch_main_async_safe(^{
+        ch_dispatch_main_async_safe(^{
             NSError *error = [NSError errorWithDomain:SDWebImageErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey : @"Trying to load a nil url"}];
             if (completedBlock) {
                 completedBlock(nil, error, SDImageCacheTypeNone, url);

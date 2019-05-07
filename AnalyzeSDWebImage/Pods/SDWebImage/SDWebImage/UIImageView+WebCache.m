@@ -10,6 +10,9 @@
 #import "objc/runtime.h"
 #import "UIView+WebCacheOperation.h"
 
+//code block
+#import "SafetyBlock.h"
+
 static char imageURLKey;
 static char TAG_ACTIVITY_INDICATOR;
 static char TAG_ACTIVITY_STYLE;
@@ -46,7 +49,7 @@ static char TAG_ACTIVITY_SHOW;
     objc_setAssociatedObject(self, &imageURLKey, url, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 
     if (!(options & SDWebImageDelayPlaceholder)) {
-        dispatch_main_async_safe(^{
+        ch_dispatch_main_async_safe(^{
             self.image = placeholder;
         });
     }
@@ -62,7 +65,7 @@ static char TAG_ACTIVITY_SHOW;
         id <SDWebImageOperation> operation = [SDWebImageManager.sharedManager downloadImageWithURL:url options:options progress:progressBlock completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
             [wself removeActivityIndicator];
             if (!wself) return;
-            dispatch_main_sync_safe(^{
+            ch_dispatch_main_sync_safe(^{
                 if (!wself) return;
                 if (image && (options & SDWebImageAvoidAutoSetImage) && completedBlock)
                 {
@@ -85,7 +88,7 @@ static char TAG_ACTIVITY_SHOW;
         }];
         [self sd_setImageLoadOperation:operation forKey:@"UIImageViewImageLoad"];
     } else {
-        dispatch_main_async_safe(^{
+        ch_dispatch_main_async_safe(^{
             [self removeActivityIndicator];
             if (completedBlock) {
                 NSError *error = [NSError errorWithDomain:SDWebImageErrorDomain code:-1 userInfo:@{NSLocalizedDescriptionKey : @"Trying to load a nil url"}];
@@ -115,7 +118,7 @@ static char TAG_ACTIVITY_SHOW;
     for (NSURL *logoImageURL in arrayOfURLs) {
         id <SDWebImageOperation> operation = [SDWebImageManager.sharedManager downloadImageWithURL:logoImageURL options:0 progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
             if (!wself) return;
-            dispatch_main_sync_safe(^{
+            ch_dispatch_main_sync_safe(^{
                 __strong UIImageView *sself = wself;
                 [sself stopAnimating];
                 if (sself && image) {
@@ -176,7 +179,7 @@ static char TAG_ACTIVITY_SHOW;
         self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:[self getIndicatorStyle]];
         self.activityIndicator.translatesAutoresizingMaskIntoConstraints = NO;
 
-        dispatch_main_async_safe(^{
+        ch_dispatch_main_async_safe(^{
             [self addSubview:self.activityIndicator];
 
             [self addConstraint:[NSLayoutConstraint constraintWithItem:self.activityIndicator
@@ -196,7 +199,7 @@ static char TAG_ACTIVITY_SHOW;
         });
     }
 
-    dispatch_main_async_safe(^{
+    ch_dispatch_main_async_safe(^{
         [self.activityIndicator startAnimating];
     });
 

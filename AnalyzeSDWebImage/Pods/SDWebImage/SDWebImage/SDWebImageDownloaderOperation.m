@@ -318,7 +318,7 @@ NSString *const SDWebImageDownloadFinishNotification = @"SDWebImageDownloadFinis
                     image = scaledImage;
                 }
                 CGImageRelease(partialImageRef);
-                dispatch_main_sync_safe(^{
+                ch_dispatch_main_sync_safe(^{
                     if (self.completedBlock) {
                         self.completedBlock(image, nil, nil, NO);
                     }

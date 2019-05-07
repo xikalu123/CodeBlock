@@ -9,6 +9,9 @@
 
 #import <TargetConditionals.h>
 
+//code block
+#import "SafetyBlock.h"
+
 #ifdef __OBJC_GC__
 #error SDWebImage does not support Objective-C Garbage Collection
 #endif
