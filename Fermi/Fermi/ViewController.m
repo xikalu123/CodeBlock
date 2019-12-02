@@ -12,6 +12,9 @@
 #import "handleInterceptorTwo.h"
 #import "handleInterceptorThree.h"
 
+//----线程安全字典
+#import "SyncMutableDictionary.h"
+
 @interface ViewController ()
 
 @end
@@ -20,7 +23,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self testInterceptors];
+//    [self testInterceptors];
+//    [self testSyncDic];
     // Do any additional setup after loading the view.
 }
 
@@ -39,6 +43,43 @@
     NSDictionary *output =  [chain proceed:input error:&error];
     
     NSLog(@"asdasd ===== %@",output);
+    
+}
+
+- (void)testSyncDic{
+    __block SyncMutableDictionary *safeDic = [SyncMutableDictionary new];
+    for (int i = 0; i<1000; i++) {
+        [safeDic setObject:[NSString stringWithFormat:@"第%d个数据：数据是%d",i,i] forKey:[NSString stringWithFormat:@"key%d",i]];
+    }
+    
+    for (int i = 0; i<1000; i++) {
+        if(i<200){
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                NSLog(@"%@====%@",[NSString stringWithFormat:@"key%d",i],[safeDic objectForKey:[NSString stringWithFormat:@"key%d",i]]);
+            });
+        }
+        if (i>=200 && i<700) {
+            NSLog(@"ssss=====%d",i);
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                [safeDic setObject:[NSString stringWithFormat:@"修改了数%d",i] forKey:[NSString stringWithFormat:@"key%d",i]];
+            });
+        }
+        if(i>=700){
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                NSLog(@"%@====%@",[NSString stringWithFormat:@"key%d",i],[safeDic objectForKey:[NSString stringWithFormat:@"key%d",i]]);
+            });
+        }
+    }
+    
+    dispatch_barrier_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSLog(@"chen-----------------------------chen");
+    });
+    
+    for (int i = 0; i<1000; i++) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSLog(@"%@====%@",[NSString stringWithFormat:@"key%d",i],[safeDic objectForKey:[NSString stringWithFormat:@"key%d",i]]);
+        });
+    }
     
 }
 

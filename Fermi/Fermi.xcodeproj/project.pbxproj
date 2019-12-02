@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A02BEAD23950FFD0096EBED /* SyncMutableDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A02BEAC23950FFD0096EBED /* SyncMutableDictionary.m */; };
 		0ABCE03C23853EE500DDD9F1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ABCE03B23853EE500DDD9F1 /* AppDelegate.m */; };
 		0ABCE03F23853EE500DDD9F1 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ABCE03E23853EE500DDD9F1 /* ViewController.m */; };
 		0ABCE04223853EE500DDD9F1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0ABCE04023853EE500DDD9F1 /* Main.storyboard */; };
@@ -39,6 +40,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0A02BEAB23950FFD0096EBED /* SyncMutableDictionary.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SyncMutableDictionary.h; sourceTree = "<group>"; };
+		0A02BEAC23950FFD0096EBED /* SyncMutableDictionary.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SyncMutableDictionary.m; sourceTree = "<group>"; };
 		0ABCE03723853EE500DDD9F1 /* Fermi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Fermi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0ABCE03A23853EE500DDD9F1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		0ABCE03B23853EE500DDD9F1 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -90,6 +93,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0A02BEAA23950F9F0096EBED /* SyncMutableDictionary */ = {
+			isa = PBXGroup;
+			children = (
+				0A02BEAB23950FFD0096EBED /* SyncMutableDictionary.h */,
+				0A02BEAC23950FFD0096EBED /* SyncMutableDictionary.m */,
+			);
+			path = SyncMutableDictionary;
+			sourceTree = "<group>";
+		};
 		0ABCE02E23853EE500DDD9F1 = {
 			isa = PBXGroup;
 			children = (
@@ -113,6 +125,7 @@
 		0ABCE03923853EE500DDD9F1 /* Fermi */ = {
 			isa = PBXGroup;
 			children = (
+				0A02BEAA23950F9F0096EBED /* SyncMutableDictionary */,
 				0ABCE06C2385401900DDD9F1 /* Interceptor */,
 				0ABCE03A23853EE500DDD9F1 /* AppDelegate.h */,
 				0ABCE03B23853EE500DDD9F1 /* AppDelegate.m */,
@@ -297,6 +310,7 @@
 				0ABCE0722385466100DDD9F1 /* handleInterceptorOne.m in Sources */,
 				0ABCE03C23853EE500DDD9F1 /* AppDelegate.m in Sources */,
 				0ABCE06F2385411300DDD9F1 /* Interceptor.m in Sources */,
+				0A02BEAD23950FFD0096EBED /* SyncMutableDictionary.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
