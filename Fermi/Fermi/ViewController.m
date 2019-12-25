@@ -13,10 +13,12 @@
 #import "handleInterceptorThree.h"
 
 //----线程安全字典
+#import "AsyncTestTableViewController.h"
 #import "SyncMutableDictionary.h"
 
-@interface ViewController ()
 
+@interface ViewController ()
+@property (strong, nonatomic) UIButton *btn;
 @end
 
 @implementation ViewController
@@ -26,7 +28,30 @@
 //    [self testInterceptors];
 //    [self testSyncDic];
     // Do any additional setup after loading the view.
+    
+    [self.view addSubview:self.btn];
 }
+
+
+- (UIButton *)btn{
+    if (!_btn) {
+        _btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        _btn.frame = CGRectMake(20, 100, 60, 50);
+        _btn.layer.borderWidth = 1;
+        [_btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [_btn setTitle:@"Testin" forState:UIControlStateNormal];
+        [_btn addTarget:self action:@selector(testLayer) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _btn;
+}
+
+- (void)testLayer{
+    
+    AsyncTestTableViewController *test = [AsyncTestTableViewController new];
+    [self presentViewController:test animated:YES completion:nil];
+}
+
+
 
 
 - (void)testInterceptors{

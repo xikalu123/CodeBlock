@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		0A02BEAD23950FFD0096EBED /* SyncMutableDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A02BEAC23950FFD0096EBED /* SyncMutableDictionary.m */; };
+		0A02BEB12397AFD20096EBED /* ChenTestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A02BEB02397AFD20096EBED /* ChenTestOperation.m */; };
+		0A02BEB62397B7D80096EBED /* TestMacro.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A02BEB52397B7D80096EBED /* TestMacro.m */; };
+		0A72E95323B2325800FD566E /* AsyncTestTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A72E95223B2325800FD566E /* AsyncTestTableViewController.m */; };
+		0A72E95623B23B4700FD566E /* LayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A72E95523B23B4700FD566E /* LayerView.m */; };
+		0A72E95923B23B5D00FD566E /* CusLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A72E95823B23B5D00FD566E /* CusLayer.m */; };
+		0A72E95D23B33BA200FD566E /* UIView+ChenPopAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A72E95C23B33BA200FD566E /* UIView+ChenPopAnimation.m */; };
 		0ABCE03C23853EE500DDD9F1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ABCE03B23853EE500DDD9F1 /* AppDelegate.m */; };
 		0ABCE03F23853EE500DDD9F1 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ABCE03E23853EE500DDD9F1 /* ViewController.m */; };
 		0ABCE04223853EE500DDD9F1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0ABCE04023853EE500DDD9F1 /* Main.storyboard */; };
@@ -42,6 +48,19 @@
 /* Begin PBXFileReference section */
 		0A02BEAB23950FFD0096EBED /* SyncMutableDictionary.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SyncMutableDictionary.h; sourceTree = "<group>"; };
 		0A02BEAC23950FFD0096EBED /* SyncMutableDictionary.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SyncMutableDictionary.m; sourceTree = "<group>"; };
+		0A02BEAF2397AFD20096EBED /* ChenTestOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChenTestOperation.h; sourceTree = "<group>"; };
+		0A02BEB02397AFD20096EBED /* ChenTestOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChenTestOperation.m; sourceTree = "<group>"; };
+		0A02BEB32397B7B90096EBED /* CustomMacroTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomMacroTool.h; sourceTree = "<group>"; };
+		0A02BEB42397B7D80096EBED /* TestMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestMacro.h; sourceTree = "<group>"; };
+		0A02BEB52397B7D80096EBED /* TestMacro.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestMacro.m; sourceTree = "<group>"; };
+		0A72E95123B2325800FD566E /* AsyncTestTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AsyncTestTableViewController.h; sourceTree = "<group>"; };
+		0A72E95223B2325800FD566E /* AsyncTestTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AsyncTestTableViewController.m; sourceTree = "<group>"; };
+		0A72E95423B23B4700FD566E /* LayerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LayerView.h; sourceTree = "<group>"; };
+		0A72E95523B23B4700FD566E /* LayerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LayerView.m; sourceTree = "<group>"; };
+		0A72E95723B23B5D00FD566E /* CusLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CusLayer.h; sourceTree = "<group>"; };
+		0A72E95823B23B5D00FD566E /* CusLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CusLayer.m; sourceTree = "<group>"; };
+		0A72E95B23B33BA200FD566E /* UIView+ChenPopAnimation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+ChenPopAnimation.h"; sourceTree = "<group>"; };
+		0A72E95C23B33BA200FD566E /* UIView+ChenPopAnimation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+ChenPopAnimation.m"; sourceTree = "<group>"; };
 		0ABCE03723853EE500DDD9F1 /* Fermi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Fermi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0ABCE03A23853EE500DDD9F1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		0ABCE03B23853EE500DDD9F1 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -102,6 +121,34 @@
 			path = SyncMutableDictionary;
 			sourceTree = "<group>";
 		};
+		0A02BEAE2397AF6E0096EBED /* ChenNSOperation */ = {
+			isa = PBXGroup;
+			children = (
+				0A02BEAF2397AFD20096EBED /* ChenTestOperation.h */,
+				0A02BEB02397AFD20096EBED /* ChenTestOperation.m */,
+			);
+			path = ChenNSOperation;
+			sourceTree = "<group>";
+		};
+		0A02BEB22397B5C90096EBED /* Macro */ = {
+			isa = PBXGroup;
+			children = (
+				0A02BEB32397B7B90096EBED /* CustomMacroTool.h */,
+				0A02BEB42397B7D80096EBED /* TestMacro.h */,
+				0A02BEB52397B7D80096EBED /* TestMacro.m */,
+			);
+			path = Macro;
+			sourceTree = "<group>";
+		};
+		0A72E95A23B33B7100FD566E /* popAnimationBlock */ = {
+			isa = PBXGroup;
+			children = (
+				0A72E95B23B33BA200FD566E /* UIView+ChenPopAnimation.h */,
+				0A72E95C23B33BA200FD566E /* UIView+ChenPopAnimation.m */,
+			);
+			path = popAnimationBlock;
+			sourceTree = "<group>";
+		};
 		0ABCE02E23853EE500DDD9F1 = {
 			isa = PBXGroup;
 			children = (
@@ -125,6 +172,9 @@
 		0ABCE03923853EE500DDD9F1 /* Fermi */ = {
 			isa = PBXGroup;
 			children = (
+				0AE7A5AF23AB380E004E33C7 /* AsyncUIIKit */,
+				0A02BEB22397B5C90096EBED /* Macro */,
+				0A02BEAE2397AF6E0096EBED /* ChenNSOperation */,
 				0A02BEAA23950F9F0096EBED /* SyncMutableDictionary */,
 				0ABCE06C2385401900DDD9F1 /* Interceptor */,
 				0ABCE03A23853EE500DDD9F1 /* AppDelegate.h */,
@@ -171,6 +221,20 @@
 				0ABCE0772385468E00DDD9F1 /* handleInterceptorThree.m */,
 			);
 			path = Interceptor;
+			sourceTree = "<group>";
+		};
+		0AE7A5AF23AB380E004E33C7 /* AsyncUIIKit */ = {
+			isa = PBXGroup;
+			children = (
+				0A72E95A23B33B7100FD566E /* popAnimationBlock */,
+				0A72E95123B2325800FD566E /* AsyncTestTableViewController.h */,
+				0A72E95223B2325800FD566E /* AsyncTestTableViewController.m */,
+				0A72E95423B23B4700FD566E /* LayerView.h */,
+				0A72E95523B23B4700FD566E /* LayerView.m */,
+				0A72E95723B23B5D00FD566E /* CusLayer.h */,
+				0A72E95823B23B5D00FD566E /* CusLayer.m */,
+			);
+			path = AsyncUIIKit;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -306,7 +370,13 @@
 				0ABCE0752385467900DDD9F1 /* handleInterceptorTwo.m in Sources */,
 				0ABCE03F23853EE500DDD9F1 /* ViewController.m in Sources */,
 				0ABCE04A23853EE700DDD9F1 /* main.m in Sources */,
+				0A02BEB12397AFD20096EBED /* ChenTestOperation.m in Sources */,
+				0A02BEB62397B7D80096EBED /* TestMacro.m in Sources */,
+				0A72E95D23B33BA200FD566E /* UIView+ChenPopAnimation.m in Sources */,
 				0ABCE0782385468E00DDD9F1 /* handleInterceptorThree.m in Sources */,
+				0A72E95623B23B4700FD566E /* LayerView.m in Sources */,
+				0A72E95923B23B5D00FD566E /* CusLayer.m in Sources */,
+				0A72E95323B2325800FD566E /* AsyncTestTableViewController.m in Sources */,
 				0ABCE0722385466100DDD9F1 /* handleInterceptorOne.m in Sources */,
 				0ABCE03C23853EE500DDD9F1 /* AppDelegate.m in Sources */,
 				0ABCE06F2385411300DDD9F1 /* Interceptor.m in Sources */,
