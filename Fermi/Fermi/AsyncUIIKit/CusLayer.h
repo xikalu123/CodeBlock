@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CusLayer : CALayer
 
+@property (nonatomic, assign) CGFloat time;
+
 @end
 
 NS_ASSUME_NONNULL_END

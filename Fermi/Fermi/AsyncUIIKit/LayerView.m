@@ -42,25 +42,41 @@
 static int k = 0;
 - (void)testAnimation{
     
-    k++;
-    if(k%2){
-        
-        /*
-         如果没有效果
-         是因为 view 重写了 drawRect方法。
-         因为生成iamge设置到 layer.contents 上面 不能重写。
-         */
-        [UIView CH_popAnimationWithDuration:1.7
-        animations:^{
-            self.backgroundColor = [UIColor redColor];
-            self.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.3, 1.3);
-            self.transform = CGAffineTransformMakeRotation(M_PI_2);
-           }];
-        
-//       self.center = CGPointMake(200, 200);
-    }else{
-//       self.center = CGPointMake(100, 100);
-    }
+//    if ([self.layer isKindOfClass:[CusLayer class]]) {
+//        ((CusLayer *)self.layer).time = 1.4;
+//    }
+    
+    NSLog(@"sss======%@",[self.layer valueForKey:@"masksToBounds"]);
+    
+    
+//    CABasicAnimation *animation = [CABasicAnimation animation];
+//    animation.keyPath = @"position.x";
+//    animation.fromValue = @77;
+//    animation.toValue = @455;
+//    animation.duration = 1;
+//
+//    [self.layer addAnimation:animation forKey:@"basic"];
+//    self.frame = CGRectMake(455, self.frame.origin.y, self.frame.size.width, self.frame.size.height);
+    
+//    k++;
+//    if(k%2){
+//
+//        /*
+//         如果没有效果
+//         是因为 view 重写了 drawRect方法。
+//         因为生成iamge设置到 layer.contents 上面 不能重写。
+//         */
+//        [UIView CH_popAnimationWithDuration:1.7
+//        animations:^{
+//            self.backgroundColor = [UIColor redColor];
+//            self.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.3, 1.3);
+//            self.transform = CGAffineTransformMakeRotation(M_PI_2);
+//           }];
+//
+////       self.center = CGPointMake(200, 200);
+//    }else{
+////       self.center = CGPointMake(100, 100);
+//    }
 //
 //    NSLog(@"jjjssss===========%@",[self.layer valueForKey:@"position"]); // layer属性改变后的新值
     
@@ -108,8 +124,8 @@ static int k = 0;
 }
 */
 
-//+ (Class)layerClass{
-//    return  [CusLayer class];
-//}
++ (Class)layerClass{
+    return  [CusLayer class];
+}
 
 @end
