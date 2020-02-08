@@ -16,6 +16,9 @@
 #import "AsyncTestTableViewController.h"
 #import "SyncMutableDictionary.h"
 
+//打印Block持有的对象
+#import "NSObject+ChBlock.h"
+
 
 @interface ViewController ()
 @property (strong, nonatomic) UIButton *btn;
@@ -30,6 +33,25 @@
     // Do any additional setup after loading the view.
     
     [self.view addSubview:self.btn];
+    
+    
+    id obj1 = [NSObject new];
+    id obj2 = [NSObject new];
+    id obj3 = [NSObject new];
+    id obj4 = [NSObject new];
+    
+    int a = 0;
+    
+    __weak typeof(self) weak  =  self;
+    
+    void (^blk)() = ^(){
+        
+        NSLog(@"obj1 = %@ , obj2 = %@ ,obj3 = %@,obj4 = %@,self = %@",obj1,obj2,obj3,obj4, weak);
+        
+        NSLog(@"sss====%d",a);
+    };
+    showBlockExtendedLayout(blk);
+
 }
 
 
