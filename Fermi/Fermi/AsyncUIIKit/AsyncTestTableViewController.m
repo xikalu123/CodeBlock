@@ -8,8 +8,12 @@
 
 #import "AsyncTestTableViewController.h"
 #import "LayerView.h"
+#import "ChenKeyFrameAnimation.h"
+#import "ClockFace.h"
 
 @interface AsyncTestTableViewController ()
+
+@property (nonatomic, strong) CADisplayLink *displayLink;
 
 @property (nonatomic, strong) UIButton *exitBtn;
 
@@ -26,9 +30,41 @@
 
 @property (strong, nonatomic) LayerView *testViewlayer;
 
+@property (strong, nonatomic) ChenKeyFrameAnimation *keyAnimation;
+
+@property (strong, nonatomic) ClockFace *clockLayer;
+
+ 
 @end
 
 @implementation AsyncTestTableViewController
+
+- (CADisplayLink *)displayLink{
+    if (!_displayLink) {
+        _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(hanldeDisplay)];
+        [_displayLink addToRunLoop:[NSRunLoop currentRunLoop]  forMode:NSDefaultRunLoopMode];
+    }
+    return _displayLink;
+}
+
+- (ChenKeyFrameAnimation *)keyAnimation{
+    if (!_keyAnimation) {
+        _keyAnimation = [[ChenKeyFrameAnimation alloc] initWithFrame:CGRectMake(100, 100, 100, 20)];
+        _keyAnimation.backgroundColor = [UIColor orangeColor];
+    }
+    return _keyAnimation;
+}
+
+- (ClockFace *)clockLayer{
+    if (!_clockLayer) {
+        _clockLayer = [ClockFace new];
+    }
+    return _clockLayer;
+}
+
+- (void)hanldeDisplay{
+    NSLog(@"asdjlaksj==========%f",self.keyAnimation.layer.presentationLayer.frame.origin.x);
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -37,11 +73,19 @@
     [_exitBtn addTarget:self action:@selector(exit) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_exitBtn];
     
-    [self.view.layer addSublayer:self.shapeLayer];
+//    [self.view.layer addSublayer:self.shapeLayer];
 //    [self.view addSubview:self.shapeView];
-    [self.view addSubview:self.testLayer];
+//    [self.view addSubview:self.testLayer];
+//
+//    [self.view addSubview:self.testViewlayer];
+//
+//    [self.view addSubview:self.keyAnimation];
     
-    [self.view addSubview:self.testViewlayer];
+    self.clockLayer.frame = CGRectMake(100, 100, 200, 200);
+    [self.view.layer addSublayer:self.clockLayer];
+    self.clockLayer.time = [NSDate now];
+    
+    
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -51,6 +95,13 @@
 }
 
 - (void)exit{
+//    [self displayLink];
+    
+//    [self.keyAnimation test];
+//    [self.keyAnimation testPath];
+//    [self.keyAnimation testTimeFunc];
+//    [self.keyAnimation testAnimationGroup];
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

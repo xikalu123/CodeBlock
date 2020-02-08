@@ -26,6 +26,9 @@
 		0ABCE0722385466100DDD9F1 /* handleInterceptorOne.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ABCE0712385466000DDD9F1 /* handleInterceptorOne.m */; };
 		0ABCE0752385467900DDD9F1 /* handleInterceptorTwo.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ABCE0742385467900DDD9F1 /* handleInterceptorTwo.m */; };
 		0ABCE0782385468E00DDD9F1 /* handleInterceptorThree.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ABCE0772385468E00DDD9F1 /* handleInterceptorThree.m */; };
+		E68EAD4623CA319100B557DF /* ChenKeyFrameAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = E68EAD4523CA319100B557DF /* ChenKeyFrameAnimation.m */; };
+		E68EAD4A23CCC7D600B557DF /* ClockFace.m in Sources */ = {isa = PBXBuildFile; fileRef = E68EAD4923CCC7D600B557DF /* ClockFace.m */; };
+		E68EAD4E23EE901500B557DF /* NSObject+ChBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = E68EAD4D23EE901500B557DF /* NSObject+ChBlock.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +88,12 @@
 		0ABCE0742385467900DDD9F1 /* handleInterceptorTwo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = handleInterceptorTwo.m; sourceTree = "<group>"; };
 		0ABCE0762385468E00DDD9F1 /* handleInterceptorThree.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = handleInterceptorThree.h; sourceTree = "<group>"; };
 		0ABCE0772385468E00DDD9F1 /* handleInterceptorThree.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = handleInterceptorThree.m; sourceTree = "<group>"; };
+		E68EAD4423CA319100B557DF /* ChenKeyFrameAnimation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChenKeyFrameAnimation.h; sourceTree = "<group>"; };
+		E68EAD4523CA319100B557DF /* ChenKeyFrameAnimation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChenKeyFrameAnimation.m; sourceTree = "<group>"; };
+		E68EAD4823CCC7D600B557DF /* ClockFace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClockFace.h; sourceTree = "<group>"; };
+		E68EAD4923CCC7D600B557DF /* ClockFace.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ClockFace.m; sourceTree = "<group>"; };
+		E68EAD4C23EE901500B557DF /* NSObject+ChBlock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+ChBlock.h"; sourceTree = "<group>"; };
+		E68EAD4D23EE901500B557DF /* NSObject+ChBlock.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+ChBlock.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,6 +181,7 @@
 		0ABCE03923853EE500DDD9F1 /* Fermi */ = {
 			isa = PBXGroup;
 			children = (
+				E68EAD4B23EE8FC900B557DF /* Block */,
 				0AE7A5AF23AB380E004E33C7 /* AsyncUIIKit */,
 				0A02BEB22397B5C90096EBED /* Macro */,
 				0A02BEAE2397AF6E0096EBED /* ChenNSOperation */,
@@ -226,6 +236,8 @@
 		0AE7A5AF23AB380E004E33C7 /* AsyncUIIKit */ = {
 			isa = PBXGroup;
 			children = (
+				E68EAD4723CCC79D00B557DF /* CustomCALayer */,
+				E68EAD4323CA314D00B557DF /* Basic Animation */,
 				0A72E95A23B33B7100FD566E /* popAnimationBlock */,
 				0A72E95123B2325800FD566E /* AsyncTestTableViewController.h */,
 				0A72E95223B2325800FD566E /* AsyncTestTableViewController.m */,
@@ -235,6 +247,33 @@
 				0A72E95823B23B5D00FD566E /* CusLayer.m */,
 			);
 			path = AsyncUIIKit;
+			sourceTree = "<group>";
+		};
+		E68EAD4323CA314D00B557DF /* Basic Animation */ = {
+			isa = PBXGroup;
+			children = (
+				E68EAD4423CA319100B557DF /* ChenKeyFrameAnimation.h */,
+				E68EAD4523CA319100B557DF /* ChenKeyFrameAnimation.m */,
+			);
+			path = "Basic Animation";
+			sourceTree = "<group>";
+		};
+		E68EAD4723CCC79D00B557DF /* CustomCALayer */ = {
+			isa = PBXGroup;
+			children = (
+				E68EAD4823CCC7D600B557DF /* ClockFace.h */,
+				E68EAD4923CCC7D600B557DF /* ClockFace.m */,
+			);
+			path = CustomCALayer;
+			sourceTree = "<group>";
+		};
+		E68EAD4B23EE8FC900B557DF /* Block */ = {
+			isa = PBXGroup;
+			children = (
+				E68EAD4C23EE901500B557DF /* NSObject+ChBlock.h */,
+				E68EAD4D23EE901500B557DF /* NSObject+ChBlock.m */,
+			);
+			path = Block;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -368,11 +407,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				0ABCE0752385467900DDD9F1 /* handleInterceptorTwo.m in Sources */,
+				E68EAD4A23CCC7D600B557DF /* ClockFace.m in Sources */,
 				0ABCE03F23853EE500DDD9F1 /* ViewController.m in Sources */,
 				0ABCE04A23853EE700DDD9F1 /* main.m in Sources */,
 				0A02BEB12397AFD20096EBED /* ChenTestOperation.m in Sources */,
 				0A02BEB62397B7D80096EBED /* TestMacro.m in Sources */,
 				0A72E95D23B33BA200FD566E /* UIView+ChenPopAnimation.m in Sources */,
+				E68EAD4E23EE901500B557DF /* NSObject+ChBlock.m in Sources */,
 				0ABCE0782385468E00DDD9F1 /* handleInterceptorThree.m in Sources */,
 				0A72E95623B23B4700FD566E /* LayerView.m in Sources */,
 				0A72E95923B23B5D00FD566E /* CusLayer.m in Sources */,
@@ -381,6 +422,7 @@
 				0ABCE03C23853EE500DDD9F1 /* AppDelegate.m in Sources */,
 				0ABCE06F2385411300DDD9F1 /* Interceptor.m in Sources */,
 				0A02BEAD23950FFD0096EBED /* SyncMutableDictionary.m in Sources */,
+				E68EAD4623CA319100B557DF /* ChenKeyFrameAnimation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
