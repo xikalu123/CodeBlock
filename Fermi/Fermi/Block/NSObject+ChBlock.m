@@ -7,8 +7,20 @@
 //
 
 #import "NSObject+ChBlock.h"
+#import <objc/runtime.h>
 
 @implementation NSObject (ChBlock)
+
++ (void)load{
+    Class blockCls = NSClassFromString(@"NSBlock");
+    //Encode 编码
+    BOOL bok = class_addMethod(blockCls, @selector(description), block_description, "@@:");
+}
+
+NSString *block_description(id obj, SEL _cmd){
+    showBlockExtendedLayout(obj);
+    return @"";
+}
 
 void showBlockExtendedLayout(id block){
     static int32_t BLOCK_HAS_COPY_DISPOSE = (1<<25);//compiler
@@ -94,12 +106,12 @@ void showBlockExtendedLayout(id block){
         }
         
         if (y!=0) {
-            //重新编码 高4位 是3 表示 strong 指针, 低4位是 指针的个数.
+            //重新编码 高4位 是3 表示 __block 指针, 低4位是 指针的个数.
             compactEncoding[idx++] = (BLOCK_LAYOUT_BYREF<<4) | y;
         }
         
         if (z!=0) {
-            //重新编码 高4位 是3 表示 strong 指针, 低4位是 指针的个数.
+            //重新编码 高4位 是3 表示 weak 指针, 低4位是 指针的个数.
             compactEncoding[idx++] = (BLOCK_LAYOUT_WEAK<<4) | z;
         }
         
@@ -124,6 +136,7 @@ void showBlockExtendedLayout(id block){
                 //因为引用外部__block类型不是一个OC对象,这里跳过BLOCK_LAYOUT_BYREF
                 if (P != BLOCK_LAYOUT_BYREF) {
                     //根据便宜得到外部对象的地址,并转化为OC对象.
+                    //这点 最好区分 指针 * 的用法
                     void *refObjcAddr = *(void **)(blockmemoryAddr + refObjOffset);
                     id refObjc = (__bridge id) refObjcAddr;
                     

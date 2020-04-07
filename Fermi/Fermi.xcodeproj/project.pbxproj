@@ -26,9 +26,11 @@
 		0ABCE0722385466100DDD9F1 /* handleInterceptorOne.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ABCE0712385466000DDD9F1 /* handleInterceptorOne.m */; };
 		0ABCE0752385467900DDD9F1 /* handleInterceptorTwo.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ABCE0742385467900DDD9F1 /* handleInterceptorTwo.m */; };
 		0ABCE0782385468E00DDD9F1 /* handleInterceptorThree.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ABCE0772385468E00DDD9F1 /* handleInterceptorThree.m */; };
+		E656BBCA243B7E3500B1A695 /* NSObject+PrintRetain.m in Sources */ = {isa = PBXBuildFile; fileRef = E656BBC9243B7E3500B1A695 /* NSObject+PrintRetain.m */; };
 		E68EAD4623CA319100B557DF /* ChenKeyFrameAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = E68EAD4523CA319100B557DF /* ChenKeyFrameAnimation.m */; };
 		E68EAD4A23CCC7D600B557DF /* ClockFace.m in Sources */ = {isa = PBXBuildFile; fileRef = E68EAD4923CCC7D600B557DF /* ClockFace.m */; };
 		E68EAD4E23EE901500B557DF /* NSObject+ChBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = E68EAD4D23EE901500B557DF /* NSObject+ChBlock.m */; };
+		E68EAD5223FAF51200B557DF /* ChenObjcSend.m in Sources */ = {isa = PBXBuildFile; fileRef = E68EAD5123FAF51200B557DF /* ChenObjcSend.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,12 +90,16 @@
 		0ABCE0742385467900DDD9F1 /* handleInterceptorTwo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = handleInterceptorTwo.m; sourceTree = "<group>"; };
 		0ABCE0762385468E00DDD9F1 /* handleInterceptorThree.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = handleInterceptorThree.h; sourceTree = "<group>"; };
 		0ABCE0772385468E00DDD9F1 /* handleInterceptorThree.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = handleInterceptorThree.m; sourceTree = "<group>"; };
+		E656BBC8243B7E3500B1A695 /* NSObject+PrintRetain.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+PrintRetain.h"; sourceTree = "<group>"; };
+		E656BBC9243B7E3500B1A695 /* NSObject+PrintRetain.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+PrintRetain.m"; sourceTree = "<group>"; };
 		E68EAD4423CA319100B557DF /* ChenKeyFrameAnimation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChenKeyFrameAnimation.h; sourceTree = "<group>"; };
 		E68EAD4523CA319100B557DF /* ChenKeyFrameAnimation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChenKeyFrameAnimation.m; sourceTree = "<group>"; };
 		E68EAD4823CCC7D600B557DF /* ClockFace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClockFace.h; sourceTree = "<group>"; };
 		E68EAD4923CCC7D600B557DF /* ClockFace.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ClockFace.m; sourceTree = "<group>"; };
 		E68EAD4C23EE901500B557DF /* NSObject+ChBlock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+ChBlock.h"; sourceTree = "<group>"; };
 		E68EAD4D23EE901500B557DF /* NSObject+ChBlock.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+ChBlock.m"; sourceTree = "<group>"; };
+		E68EAD5023FAF51200B557DF /* ChenObjcSend.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChenObjcSend.h; sourceTree = "<group>"; };
+		E68EAD5123FAF51200B557DF /* ChenObjcSend.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChenObjcSend.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,6 +187,8 @@
 		0ABCE03923853EE500DDD9F1 /* Fermi */ = {
 			isa = PBXGroup;
 			children = (
+				E656BBC7243B7BB200B1A695 /* ObjectRetain */,
+				E68EAD4F23FAF4C800B557DF /* objc_msgsend */,
 				E68EAD4B23EE8FC900B557DF /* Block */,
 				0AE7A5AF23AB380E004E33C7 /* AsyncUIIKit */,
 				0A02BEB22397B5C90096EBED /* Macro */,
@@ -249,6 +257,15 @@
 			path = AsyncUIIKit;
 			sourceTree = "<group>";
 		};
+		E656BBC7243B7BB200B1A695 /* ObjectRetain */ = {
+			isa = PBXGroup;
+			children = (
+				E656BBC8243B7E3500B1A695 /* NSObject+PrintRetain.h */,
+				E656BBC9243B7E3500B1A695 /* NSObject+PrintRetain.m */,
+			);
+			path = ObjectRetain;
+			sourceTree = "<group>";
+		};
 		E68EAD4323CA314D00B557DF /* Basic Animation */ = {
 			isa = PBXGroup;
 			children = (
@@ -274,6 +291,15 @@
 				E68EAD4D23EE901500B557DF /* NSObject+ChBlock.m */,
 			);
 			path = Block;
+			sourceTree = "<group>";
+		};
+		E68EAD4F23FAF4C800B557DF /* objc_msgsend */ = {
+			isa = PBXGroup;
+			children = (
+				E68EAD5023FAF51200B557DF /* ChenObjcSend.h */,
+				E68EAD5123FAF51200B557DF /* ChenObjcSend.m */,
+			);
+			path = objc_msgsend;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -409,12 +435,14 @@
 				0ABCE0752385467900DDD9F1 /* handleInterceptorTwo.m in Sources */,
 				E68EAD4A23CCC7D600B557DF /* ClockFace.m in Sources */,
 				0ABCE03F23853EE500DDD9F1 /* ViewController.m in Sources */,
+				E656BBCA243B7E3500B1A695 /* NSObject+PrintRetain.m in Sources */,
 				0ABCE04A23853EE700DDD9F1 /* main.m in Sources */,
 				0A02BEB12397AFD20096EBED /* ChenTestOperation.m in Sources */,
 				0A02BEB62397B7D80096EBED /* TestMacro.m in Sources */,
 				0A72E95D23B33BA200FD566E /* UIView+ChenPopAnimation.m in Sources */,
 				E68EAD4E23EE901500B557DF /* NSObject+ChBlock.m in Sources */,
 				0ABCE0782385468E00DDD9F1 /* handleInterceptorThree.m in Sources */,
+				E68EAD5223FAF51200B557DF /* ChenObjcSend.m in Sources */,
 				0A72E95623B23B4700FD566E /* LayerView.m in Sources */,
 				0A72E95923B23B5D00FD566E /* CusLayer.m in Sources */,
 				0A72E95323B2325800FD566E /* AsyncTestTableViewController.m in Sources */,

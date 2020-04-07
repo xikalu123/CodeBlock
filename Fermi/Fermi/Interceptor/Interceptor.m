@@ -39,7 +39,7 @@
         return nil;
     }
     
-    RealInterceptorChain *next = [[RealInterceptorChain alloc] initWithInterceptors:self.interceptors originDic:self.input index:self.index+1];
+    RealInterceptorChain *next = [[RealInterceptorChain alloc] initWithInterceptors:self.interceptors originDic:input index:self.index+1];
     
     id<InterceptorProtocol> interceptor = [self.interceptors objectAtIndex:self.index];
     

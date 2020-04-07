@@ -38,7 +38,7 @@
     id obj1 = [NSObject new];
     id obj2 = [NSObject new];
     id obj3 = [NSObject new];
-    id obj4 = [NSObject new];
+    NSDictionary *obj4 = [NSDictionary dictionaryWithDictionary:@{@"k1":@"111",@"k2":@"222"}];
     
     int a = 0;
     
